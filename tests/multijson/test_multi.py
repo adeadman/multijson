@@ -2,6 +2,7 @@ import json
 import uuid
 import datetime
 import pytest
+from decimal import Decimal
 from multijson import MultiJSONEncoder
 
 
@@ -45,6 +46,16 @@ class TestMultiJSONEncoder:
 
         assert "time" in result
         assert result["time"] == "2017-07-01T23:11:11Z"
+
+    def test_dump_decimal(self):
+        test_input = {
+            "a": Decimal('3.9'),
+            "b": Decimal('0.0003'),
+            "c": Decimal('1200000.0000021'),
+        }
+
+        output = json.dumps(test_input, cls=MultiJSONEncoder)
+        assert output == '{"a": 3.9, "b": 0.0003, "c": 1200000.0000021}'
 
     def test_dump_custom_object(self):
         test_input = {
