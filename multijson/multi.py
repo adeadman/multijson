@@ -10,7 +10,6 @@ class MultiJSONEncoder(JSONEncoder):
     Extend the default JSONEncoder by adding support for UUID and DateTime
     """
     def default(self, obj):
-        print("In default")
         if isinstance(obj, datetime):
             return obj.strftime('%Y-%m-%dT%H:%M:%SZ')
         elif isinstance(obj, date):
